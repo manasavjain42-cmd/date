@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ A Special Question ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    overflow:hidden;
+    transition:.5s;
+}
+
+.card{
+    width:380px;
+    background:#fff;
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+    color:#ff4d6d;
+    margin-bottom:15px;
+}
+
+p{
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+.buttons{
+    position:relative;
+    height:120px;
+}
+
+button{
+    border:none;
+    padding:14px 28px;
+    border-radius:40px;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:#fff;
+}
+
+#yes:hover{
+    transform:scale(1.08);
+}
+
+#no{
+    position:absolute;
+    left:190px;
+    top:0;
+    background:#ddd;
+}
+
+#result{
+    display:none;
+    text-align:left;
+    animation:fade .6s;
+}
+
+input{
+    width:100%;
+    margin-top:8px;
+    margin-bottom:18px;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    outline:none;
+    font-size:16px;
+}
+
+label{
+    font-weight:600;
+}
+
+#submit{
+    width:100%;
+    background:#ff4d6d;
+    color:white;
+}
+
+#submit:hover{
+    transform:scale(1.03);
+}
+
+#finalMessage{
+    display:none;
+    text-align:center;
+}
+
+#summary{
+    margin-top:15px;
+    font-size:18px;
+    line-height:1.8;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+    <div id="questionSection">
+
+        <h1>❤️ Hey Beautiful ❤️</h1>
+
+        <p>
+            Every moment with you makes me smile.<br><br>
+            So... I have one important question. 🥹
+        </p>
+
+        <h2 style="margin-bottom:25px;">
+            Will you go on a date with me? 💖
+        </h2>
+
+        <div class="buttons">
+            <button id="yes">Yes ❤️</button>
+            <button id="no">No 😅</button>
+        </div>
+
+    </div>
+
+    <div id="result">
+
+        <h2 style="color:#ff4d6d;text-align:center;">
+            Yay!! 🥹❤️
+        </h2>
+
+        <p style="text-align:center;">
+            You just made my day! 💕
+            <br><br>
+            Let's plan our first date...
+        </p>
+
+        <label>🍕 What would you like to eat?</label>
+        <input
+            type="text"
+            id="food"
+            placeholder="Pizza, Pasta, Sushi..."
+        >
+
+        <label>📍 Where should we go?</label>
+        <input
+            type="text"
+            id="place"
+            placeholder="Your favorite place"
+        >
+
+        <label>📅 Which date works for you?</label>
+        <input
+            type="date"
+            id="date"
+        >
+
+        <button id="submit">
+            Confirm Our Date ❤️
+        </button>
+
+        <div id="finalMessage">
+
+            <h2 style="color:#ff4d6d;margin-top:20px;">
+                🎉 It's a Date! 🎉
+            </h2>
+
+            <p id="summary"></p>
+
+            <h3 style="margin-top:20px;">
+                I can't wait to see you ❤️🥰
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// Moving NO button
+const noBtn = document.getElementById("no");
+
+function moveButton(){
+
+    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+    noBtn.style.position="fixed";
+
+    noBtn.style.left = Math.random()*maxX+"px";
+    noBtn.style.top = Math.random()*maxY+"px";
+}
+
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("touchstart",function(e){
+    e.preventDefault();
+    moveButton();
+});
+noBtn.addEventListener("click",moveButton);
+
+
+// YES button
+document.getElementById("yes").addEventListener("click",()=>{
+
+    document.getElementById("questionSection").style.display="none";
+
+    document.getElementById("result").style.display="block";
+
+    document.body.style.background=
+    "linear-gradient(135deg,#ff758c,#ff7eb3)";
+});
+
+
+// Submit
+document.getElementById("submit").addEventListener("click",()=>{
+
+    const food=document.getElementById("food").value.trim();
+    const place=document.getElementById("place").value.trim();
+    const date=document.getElementById("date").value;
+
+    if(food==="" || place==="" || date===""){
+        alert("Please answer all the questions 😊❤️");
+        return;
+    }
+
+    document.getElementById("food").style.display="none";
+    document.getElementById("place").style.display="none";
+    document.getElementById("date").style.display="none";
+
+    document.querySelectorAll("label").forEach(e=>e.style.display="none");
+
+    document.getElementById("submit").style.display="none";
+
+    document.getElementById("finalMessage").style.display="block";
+
+    document.getElementById("summary").innerHTML=
+    `
+    ❤️ <b>Our First Date Plan</b> ❤️<br><br>
+
+    🍕 We'll eat <b>${food}</b><br><br>
+
+    📍 We'll go to <b>${place}</b><br><br>
+
+    📅 Date: <b>${date}</b><br><br>
+
+    Thank you for saying <b>YES</b>. ❤️<br>
+    I promise to make it a beautiful memory together. 🥰
+    `;
+});
+
+</script>
+
+</body>
+</html>
